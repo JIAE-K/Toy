@@ -176,13 +176,31 @@ export const insertRect = (canvas:fabric.Canvas) => {
   canvas.renderAll();
 };
 
-export const setFontSize = (canvas:fabric.Canvas) => {
+export const setFontBold = (canvas:fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
   if (activeObject instanceof fabric.Textbox) {
-    activeObject.fontSize === 40
-      ? activeObject.set("fontSize", 20)
-      : activeObject.set("fontSize", 40);
+    activeObject.fontWeight !== "bold"
+      ? activeObject.set("fontWeight", "bold")
+      : activeObject.set("fontWeight", "");
+    canvas.renderAll();
+  }
+}
+
+export const setIncreaseFontSize = (canvas:fabric.Canvas) => {
+  const activeObject = canvas.getActiveObject();
+
+  if (activeObject instanceof fabric.Textbox) {
+      activeObject.set("fontSize", activeObject.fontSize! + 1)
+    canvas.renderAll();
+  }
+};
+
+export const setDecreaseFontSize = (canvas:fabric.Canvas) => {
+  const activeObject = canvas.getActiveObject();
+
+  if (activeObject instanceof fabric.Textbox) {
+      activeObject.set("fontSize", activeObject.fontSize! - 1)
     canvas.renderAll();
   }
 };
