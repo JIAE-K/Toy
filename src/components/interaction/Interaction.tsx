@@ -12,7 +12,7 @@ type choiceList = {
 export default function Interaction() {
   const [list, setList] = useState<choiceList[]>([]);
   const [newData, setNewData] = useState<string[]>([]);
-  const { activeObject, canvas, options } = useSelector(
+  const { activeObject, canvas } = useSelector(
     (state) => (state as any).authoring
   );
 
@@ -22,50 +22,45 @@ export default function Interaction() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //순서 리스트 options 초기 설정 > newData로 관리
-    optionsItem && setNewData(optionsItem?.split(","));
+    if (!canvas || !optionsItem || newData.length !== 0) return;
 
     //추가한 List 띄우기
     const jsonData = localStorage.getItem("canvasData");
+    const list = [];
     if (jsonData) {
       const canvasData = JSON.parse(jsonData);
       for (let i = 0; i < canvasData.objects.length; i++) {
         if (canvasData.objects[i].data) {
-          setList((prev) => [
-            ...prev,
-            {
-              id: canvasData.objects[i].data.jeiId,
-              src: canvasData.objects[i].data.src,
-              answer: canvasData.objects[i].data.answer,
-            },
-          ]);
+          //업데이트 된 이미지로 바꿔주기          
+          list.push({
+            id: canvasData.objects[i].data.jeiId,
+            src: canvasData.objects[i].data.src,
+            answer: canvasData.objects[i].data.answer,
+          });
         }
+
+        //순서 정렬
+        if (list.length !== 0) {
+          const newList = list.sort((next, curr) => {
+            const currArrNum = newData.indexOf(curr.id);
+            const nextArrNum = newData.indexOf(next.id);
+            return nextArrNum - currArrNum;
+          });
+          setList(newList);
+        }
+
+        // RadioButton 초기 설정
+        const selectedChoice = list.find((el) => el.answer === 1);
+        selectedChoice && setIsChecked(selectedChoice.id);
       }
     }
-  }, []);
+  }, [canvas, newData, optionsItem]);
 
   useEffect(() => {
-    //순서 정렬
-    if (list.length !== 0) {
-      const newList = list.sort((next, curr) => {
-        const currArrNum = newData.indexOf(curr.id!);
-        const nextArrNum = newData.indexOf(next.id!);
-        let result = 0;
-        if (nextArrNum > currArrNum) {
-          result = 1;
-        }
-        if (nextArrNum < currArrNum) {
-          result = -1;
-        }
-        return result;
-      });
-      setList(newList);
-    }
-
-    // RadioButton 초기 설정
-    const selectedChoice = list.find((el) => el.answer === 1);
-    selectedChoice && setIsChecked(selectedChoice.id);
-  }, [list]);
+    if (!optionsItem) return;
+    //순서 리스트 options 초기 설정 > newData로 관리
+    setNewData(optionsItem?.split(","));
+  }, [optionsItem]);
 
   //newData 업데이트될 때마다 setOptions..
   useEffect(() => {
