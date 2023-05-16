@@ -3,7 +3,6 @@
 import { useSelector } from "react-redux";
 import { insertRect, insertText, remove, save } from "../../../canvasController";
 import { AddBox, RemoveCircleOutline, TextIncrease } from "@mui/icons-material";
-import OutsideClickMenu from "../Optional/OutsideClickMenu";
 
 export default function Basic() {
   const { canvas, options } = useSelector((state) => (state as any).authoring);
@@ -11,6 +10,7 @@ export default function Basic() {
   const onSaveClick = () => {
     save(canvas);
     localStorage.setItem("options", options);
+    
   }
 
   const onInsertTextClick = ()=> {

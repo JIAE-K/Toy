@@ -25,15 +25,13 @@ const createCanvasController = (canvas: fabric.Canvas) => {
     // 객체 정보
     // 정답 정보
     // 순서 정보
-    // 
+    //
     // 렌더링 생각으 해봤을 때까지 고려를 해서 DATA 설계 들어가야함
-    // 
+    //
 
-    const canvasData = canvas.toJSON(['data']);
+    const canvasData = canvas.toJSON(["data"]);
     const jsonData = JSON.stringify(canvasData);
     localStorage.setItem("canvasData", jsonData);
-
-
   };
 
   const insertText = () => {
@@ -66,10 +64,10 @@ const createCanvasController = (canvas: fabric.Canvas) => {
     const activeObject = canvas.getActiveObject();
 
     if (activeObject instanceof fabric.Textbox) {
-    activeObject.underline
-      ? activeObject.set("underline", false)
-      : activeObject.set("underline", true);
-    canvas.renderAll();
+      activeObject.underline
+        ? activeObject.set("underline", false)
+        : activeObject.set("underline", true);
+      canvas.renderAll();
     }
   };
 
@@ -77,20 +75,20 @@ const createCanvasController = (canvas: fabric.Canvas) => {
     const activeObject = canvas.getActiveObject();
 
     if (activeObject instanceof fabric.Textbox) {
-    activeObject.fill === "orange"
-      ? activeObject.set("fill", "black")
-      : activeObject.set("fill", "orange");
-    canvas.renderAll();
+      activeObject.fill === "orange"
+        ? activeObject.set("fill", "black")
+        : activeObject.set("fill", "orange");
+      canvas.renderAll();
     }
   };
 
   const setShapeColor = () => {
     const activeObject = canvas.getActiveObject();
     if (activeObject instanceof fabric.Textbox) {
-    activeObject.fill === "blue"
-      ? activeObject.set("fill", "black")
-      : activeObject.set("fill", "blue");
-    canvas.renderAll();
+      activeObject.fill === "blue"
+        ? activeObject.set("fill", "black")
+        : activeObject.set("fill", "blue");
+      canvas.renderAll();
     }
   };
 
@@ -98,14 +96,14 @@ const createCanvasController = (canvas: fabric.Canvas) => {
     const activeObject = canvas.getActiveObject();
 
     if (activeObject instanceof fabric.Textbox) {
-    activeObject.set("strokeWidth", 3);
-    activeObject.set("stroke", "orange");
-    canvas.renderAll();
+      activeObject.set("strokeWidth", 3);
+      activeObject.set("stroke", "orange");
+      canvas.renderAll();
     }
   };
 
   const remove = () => {
-    const activeObject = canvas.getActiveObject()
+    const activeObject = canvas.getActiveObject();
     activeObject && canvas.remove(activeObject);
   };
 
@@ -138,7 +136,7 @@ export default createCanvasController;
 //   (state) => (state as any).authoring
 // );
 
-export const save = (canvas:fabric.Canvas) => {
+export const save = (canvas: fabric.Canvas) => {
   // DATA 구조 설계
 
   // CANVAS DATA => canvas.toJSON()
@@ -148,27 +146,24 @@ export const save = (canvas:fabric.Canvas) => {
   // 객체 정보
   // 정답 정보
   // 순서 정보
-  // 
+  //
   // 렌더링 생각으 해봤을 때까지 고려를 해서 DATA 설계 들어가야함
-  // 
+  //
 
-
-  const canvasData = canvas.toJSON(['data']);
+  const canvasData = canvas.toJSON(["data"]);
   const jsonData = JSON.stringify(canvasData);
   localStorage.setItem("canvasData", jsonData);
   // localStorage.setItem("options", )
-
-
 };
 
-export const insertText = (canvas:fabric.Canvas) => {
+export const insertText = (canvas: fabric.Canvas) => {
   console.log("insert text");
   const text = new fabric.Textbox("TEXT", { top: 0, left: 0 });
 
   canvas.add(text);
   canvas.renderAll();
 };
-export const insertRect = (canvas:fabric.Canvas) => {
+export const insertRect = (canvas: fabric.Canvas) => {
   console.log("insert rect");
   const rect = new fabric.Rect({ left: 0, top: 0, width: 50, height: 50 });
   canvas.selection = true;
@@ -176,7 +171,7 @@ export const insertRect = (canvas:fabric.Canvas) => {
   canvas.renderAll();
 };
 
-export const setFontBold = (canvas:fabric.Canvas) => {
+export const setFontBold = (canvas: fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
   if (activeObject instanceof fabric.Textbox) {
@@ -185,75 +180,97 @@ export const setFontBold = (canvas:fabric.Canvas) => {
       : activeObject.set("fontWeight", "");
     canvas.renderAll();
   }
-}
+};
 
-export const setIncreaseFontSize = (canvas:fabric.Canvas) => {
+export const setFontItalic = (canvas: fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
   if (activeObject instanceof fabric.Textbox) {
-      activeObject.set("fontSize", activeObject.fontSize! + 1)
+    activeObject.fontStyle !== "italic"
+      ? activeObject.set("fontStyle", "italic")
+      : activeObject.set("fontStyle", "");
     canvas.renderAll();
   }
 };
 
-export const setDecreaseFontSize = (canvas:fabric.Canvas) => {
+export const setFontStroke = (canvas: fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
   if (activeObject instanceof fabric.Textbox) {
-      activeObject.set("fontSize", activeObject.fontSize! - 1)
+    activeObject.linethrough
+      ? activeObject.set("linethrough", false)
+      : activeObject.set("linethrough", true);
     canvas.renderAll();
   }
 };
 
-export const setFontUnderline = (canvas:fabric.Canvas) => {
+export const setIncreaseFontSize = (canvas: fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
   if (activeObject instanceof fabric.Textbox) {
-  activeObject.underline
-    ? activeObject.set("underline", false)
-    : activeObject.set("underline", true);
-  canvas.renderAll();
+    activeObject.set("fontSize", activeObject.fontSize! + 1);
+    console.log(fabric.Textbox);
+    canvas.renderAll();
   }
 };
 
-export const setFontColor = (canvas:fabric.Canvas) => {
+export const setDecreaseFontSize = (canvas: fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
   if (activeObject instanceof fabric.Textbox) {
-  activeObject.fill === "orange"
-    ? activeObject.set("fill", "black")
-    : activeObject.set("fill", "orange");
-  canvas.renderAll();
+    activeObject.set("fontSize", activeObject.fontSize! - 1);
+    canvas.renderAll();
   }
 };
 
-export const setShapeColor = (canvas:fabric.Canvas) => {
+export const setFontUnderline = (canvas: fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
-  if (activeObject instanceof fabric.Rect) {
-
-  activeObject.fill === "blue"
-    ? activeObject.set("fill", "black")
-    : activeObject.set("fill", "blue");
-  canvas.renderAll();
+  if (activeObject instanceof fabric.Textbox) {
+    activeObject.underline
+      ? activeObject.set("underline", false)
+      : activeObject.set("underline", true);
+    canvas.renderAll();
   }
 };
 
-export const setStrokeColor = (canvas:fabric.Canvas) => {
+export const setFontColor = (canvas: fabric.Canvas, color: string) => {
+  const activeObject = canvas.getActiveObject();
+
+  if (activeObject instanceof fabric.Object) {
+    activeObject.set("fill", color);
+    if (activeObject.data?.src)
+      activeObject.data.src = activeObject.toDataURL({});
+  }
+  canvas.renderAll();
+};
+
+export const setShapeColor = (canvas: fabric.Canvas) => {
   const activeObject = canvas.getActiveObject();
 
   if (activeObject instanceof fabric.Rect) {
-    if(activeObject.strokeWidth !== 3){
+    activeObject.fill === "blue"
+      ? activeObject.set("fill", "black")
+      : activeObject.set("fill", "blue");
+    canvas.renderAll();
+  }
+};
+
+export const setStrokeColor = (canvas: fabric.Canvas, color: string) => {
+  const activeObject = canvas.getActiveObject();
+
+  if (activeObject instanceof fabric.Rect) {
+    if (color !== "white") {
       activeObject.set("strokeWidth", 3);
-      activeObject.set("stroke", "orange");
+      activeObject.set("stroke", color);
     } else {
       activeObject.set("strokeWidth", 0);
     }
-  canvas.renderAll();
+    canvas.renderAll();
   }
 };
 
-export const remove = (canvas:fabric.Canvas) => {
-  const activeObject = canvas.getActiveObject()
+export const remove = (canvas: fabric.Canvas) => {
+  const activeObject = canvas.getActiveObject();
   activeObject && canvas.remove(activeObject);
 };
