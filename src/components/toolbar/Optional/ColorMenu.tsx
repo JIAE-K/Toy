@@ -6,19 +6,11 @@ import { Icon } from "@mui/material";
 import { CompactPicker } from "react-color";
 
 interface ColorMenuProps {
-  icon: React.ElementType;
+  icon: any;
 }
 export const ColorMenu: React.FC<ColorMenuProps> = ({ icon }) => {
   const [isOpen, setIsOpen] = useState(false);
   const canvas = useSelector((state) => (state as any).authoring).canvas;
-
-  // const onFontColorClick = (color: string) => {
-  //     if(icon.type.render.displayName === "BorderColorIcon"){
-  //         setStrokeColor(canvas, color)
-  //     } else{
-  //     setFontColor(canvas, color);
-  //     }
-  //   }
 
   const [color, setColor] = useState('#fff')
 
@@ -46,17 +38,7 @@ export const ColorMenu: React.FC<ColorMenuProps> = ({ icon }) => {
               color={color} onChangeComplete={handleChangeComplete}
             ></CompactPicker>
         </div>
-    //     <div className="absolute bg-white border border-gray-300 rounded shadow-lg mt-2 z-40 ">
-    //     <div className="p-2 flex">
-    //       <div onClick={() => {onFontColorClick("black")}} className="bg-black w-5 h-5 mr-2 cursor-pointer" />
-    //               <div onClick={() => {onFontColorClick("red")}} className="bg-red-500 w-5 h-5 mr-2 cursor-pointer" />
-    //               <div onClick={() => {onFontColorClick("green")}} className="bg-green-500 w-5 h-5 mr-2 cursor-pointer" />
-    //               <div onClick={() => {onFontColorClick("blue")}} className="bg-blue-500 w-5 h-5 mr-2 cursor-pointer" />
-    //               <div onClick={() => {onFontColorClick("white")}} className="bg-white border border-black w-5 h-5 mr-2 cursor-pointer" />
-    //     </div>
-    //   </div>
       )}
-      {/* <Canvas/> */}
     </div>
   );
 };
