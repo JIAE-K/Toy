@@ -10,7 +10,6 @@ export default function Basic() {
   const onSaveClick = () => {
     save(canvas);
     localStorage.setItem("options", options);
-    
   }
 
   const onInsertTextClick = ()=> {

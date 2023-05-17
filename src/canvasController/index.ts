@@ -26,7 +26,7 @@ const createCanvasController = (canvas: fabric.Canvas) => {
     // 정답 정보
     // 순서 정보
     //
-    // 렌더링 생각으 해봤을 때까지 고려를 해서 DATA 설계 들어가야함
+    // 렌더링 생각을 해봤을 때까지 고려를 해서 DATA 설계 들어가야함
     //
 
     const canvasData = canvas.toJSON(["data"]);
@@ -178,6 +178,9 @@ export const setFontBold = (canvas: fabric.Canvas) => {
     activeObject.fontWeight !== "bold"
       ? activeObject.set("fontWeight", "bold")
       : activeObject.set("fontWeight", "");
+      if (activeObject.data?.src){
+        activeObject.data.src = activeObject.toDataURL({});
+      }
     canvas.renderAll();
   }
 };
@@ -189,6 +192,9 @@ export const setFontItalic = (canvas: fabric.Canvas) => {
     activeObject.fontStyle !== "italic"
       ? activeObject.set("fontStyle", "italic")
       : activeObject.set("fontStyle", "");
+      if (activeObject.data?.src){
+        activeObject.data.src = activeObject.toDataURL({});
+      }
     canvas.renderAll();
   }
 };
@@ -200,6 +206,9 @@ export const setFontStroke = (canvas: fabric.Canvas) => {
     activeObject.linethrough
       ? activeObject.set("linethrough", false)
       : activeObject.set("linethrough", true);
+      if (activeObject.data?.src){
+        activeObject.data.src = activeObject.toDataURL({});
+      }
     canvas.renderAll();
   }
 };
@@ -210,6 +219,9 @@ export const setIncreaseFontSize = (canvas: fabric.Canvas) => {
   if (activeObject instanceof fabric.Textbox) {
     activeObject.set("fontSize", activeObject.fontSize! + 1);
     console.log(fabric.Textbox);
+    if (activeObject.data?.src){
+      activeObject.data.src = activeObject.toDataURL({});
+    }
     canvas.renderAll();
   }
 };
@@ -219,6 +231,9 @@ export const setDecreaseFontSize = (canvas: fabric.Canvas) => {
 
   if (activeObject instanceof fabric.Textbox) {
     activeObject.set("fontSize", activeObject.fontSize! - 1);
+    if (activeObject.data?.src){
+      activeObject.data.src = activeObject.toDataURL({});
+    }
     canvas.renderAll();
   }
 };
@@ -230,6 +245,9 @@ export const setFontUnderline = (canvas: fabric.Canvas) => {
     activeObject.underline
       ? activeObject.set("underline", false)
       : activeObject.set("underline", true);
+      if (activeObject.data?.src){
+        activeObject.data.src = activeObject.toDataURL({});
+      }
     canvas.renderAll();
   }
 };
@@ -245,17 +263,6 @@ export const setFontColor = (canvas: fabric.Canvas, color: string) => {
   canvas.renderAll();
 };
 
-export const setShapeColor = (canvas: fabric.Canvas) => {
-  const activeObject = canvas.getActiveObject();
-
-  if (activeObject instanceof fabric.Rect) {
-    activeObject.fill === "blue"
-      ? activeObject.set("fill", "black")
-      : activeObject.set("fill", "blue");
-    canvas.renderAll();
-  }
-};
-
 export const setStrokeColor = (canvas: fabric.Canvas, color: string) => {
   const activeObject = canvas.getActiveObject();
 
@@ -265,6 +272,9 @@ export const setStrokeColor = (canvas: fabric.Canvas, color: string) => {
       activeObject.set("stroke", color);
     } else {
       activeObject.set("strokeWidth", 0);
+    }
+    if (activeObject.data?.src){
+      activeObject.data.src = activeObject.toDataURL({});
     }
     canvas.renderAll();
   }
